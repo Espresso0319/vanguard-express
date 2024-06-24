@@ -1,0 +1,10 @@
+#
+# .eslintrc.yml
+#
+#
+
+parser: babel-eslint
+
+env:
+  es6: true
+  node: true
