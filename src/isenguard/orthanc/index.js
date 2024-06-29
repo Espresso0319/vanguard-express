@@ -15,6 +15,9 @@ function new$(options) {
   /* Async extensions */
   root.use("seneca-as-promised");
 
+  /* Ephemeral data storage */
+  root.use(require("./store"));
+
   return root;
 }
 
