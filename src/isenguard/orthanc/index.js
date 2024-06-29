@@ -27,6 +27,9 @@ function new$(options) {
   /* i18n util functions */
   root.decorate("i18n", require("./util/i18n"));
 
+  /* Initialize the HTTP server */
+  root.use(require("./server"), core.server);
+
   return root;
 }
 
