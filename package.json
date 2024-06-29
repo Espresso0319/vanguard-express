@@ -35,6 +35,8 @@
     "gulp-wrap": "^0.13.0",
     "gulp-yaml": "^1.0.1",
     "hafiz": "^2.0.2",
+    "seneca": "^3.37.0",
+    "seneca-as-promised": "^2.0.0",
     "source-map-support": "^0.5.21"
   }
 }

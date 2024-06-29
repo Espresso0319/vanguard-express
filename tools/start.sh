@@ -5,6 +5,8 @@
 #
 # Starts the vanguard server, usually used on local dev machine.
 
+. ./.envrc
+
 # Make sure the application root path is set
 export APP_ROOT_PATH=$(pwd)/app
 
