@@ -4,8 +4,10 @@
   },
   "cSpell.words": [
     "aptfile",
+    "bson",
     "gulpfile",
     "isenguard",
-    "Procfile"
+    "Procfile",
+    "unprefixed"
   ]
 }

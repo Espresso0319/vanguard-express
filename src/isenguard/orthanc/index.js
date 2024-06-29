@@ -18,6 +18,15 @@ function new$(options) {
   /* Ephemeral data storage */
   root.use(require("./store"));
 
+  /* Attach UID management */
+  root.decorate("uid", require("./util/uid"));
+
+  /* Math util functions */
+  root.decorate("math", require("./util/math"));
+
+  /* i18n util functions */
+  root.decorate("i18n", require("./util/i18n"));
+
   return root;
 }
 
