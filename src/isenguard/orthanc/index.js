@@ -30,6 +30,9 @@ function new$(options) {
   /* Initialize the HTTP server */
   root.use(require("./server"), core.server);
 
+  /* Initialize crypto utilities */
+  root.use(require("./crypto"), core.crypto);
+
   return root;
 }
 
