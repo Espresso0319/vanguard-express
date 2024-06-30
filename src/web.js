@@ -8,5 +8,14 @@ const Orthanc = require("./isenguard/orthanc")({
 });
 
 Orthanc.ready(() => {
-  console.log("Orthanc up and ready!");
+  Orthanc.log.info("Orthanc up and ready!");
+
+  /* Listen to designated port */
+  Orthanc.ready(() => {
+    const server = Orthanc.app.listen(port, () => {
+      Orthanc.log.info(`Vanguard ready and listening on port ${port}`);
+    });
+
+    server.keepAliveTimeout = Hafiz("core.server.keepAliveTimeout");
+  });
 });

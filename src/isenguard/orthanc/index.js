@@ -33,6 +33,9 @@ function new$(options) {
   /* Initialize crypto utilities */
   root.use(require("./crypto"), core.crypto);
 
+  /* Initialize access control module */
+  root.use(require("./access"), core.access);
+
   return root;
 }
 
