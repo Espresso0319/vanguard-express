@@ -36,6 +36,9 @@ function new$(options) {
   /* Initialize access control module */
   root.use(require("./access"), core.access);
 
+  /* Attach security instance */
+  root.use(require("./security"), options.security);
+
   return root;
 }
 
