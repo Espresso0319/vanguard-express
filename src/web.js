@@ -10,6 +10,9 @@ const Orthanc = require("./isenguard/orthanc")({
 Orthanc.ready(() => {
   Orthanc.log.info("Orthanc up and ready!");
 
+  /* Application level middleware */
+  Orthanc.use("./middleware");
+
   /* Listen to designated port */
   Orthanc.ready(() => {
     const server = Orthanc.app.listen(port, () => {
