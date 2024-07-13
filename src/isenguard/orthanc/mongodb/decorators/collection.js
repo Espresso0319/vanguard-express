@@ -2,7 +2,7 @@
  * collection.js
  */
 const _ = require("lodash");
-const Stash = require("@riceeu/mongodb-stash");
+const Stash = require("../../../../mongodb-stash");
 const Debug = require("debug")("orthanc:data:collection");
 
 /**
