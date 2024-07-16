@@ -33,6 +33,9 @@ function new$(options) {
   /* Attach database access module */
   root.use(require("./mongodb"), core.mongodb);
 
+  /* Attach redis instance */
+  root.use(require("./redis"), core.redis);
+
   /* Initialize crypto utilities */
   root.use(require("./crypto"), core.crypto);
 

@@ -42,6 +42,16 @@ const jsBuild = () =>
     .pipe(gulp.dest(out));
 
 /**
+ * Build configuration files
+ */
+const ymlBuild = () =>
+  gulp
+    .src("src/**/*.yml", { base: "src" })
+    .pipe(changed(`${out}`))
+    .pipe(yaml())
+    .pipe(gulp.dest(`${out}`));
+
+/**
  * Build handlebars templates
  */
 const hbsBuild = () =>
@@ -89,6 +99,7 @@ const fileWatch = () => {
   gulp.watch("src/**/*.hbs", hbsBuild);
   gulp.watch("package.json", pkgBuild);
   gulp.watch("config/**/*", parallel(cfgBuild, etcBuild));
+  gulp.watch("src/**/*.yml", ymlBuild);
   gulp.watch("src/**/*.json", jsonBuild);
 };
 
@@ -101,7 +112,8 @@ const build = parallel(
   pkgBuild,
   cfgBuild,
   etcBuild,
-  jsonBuild
+  jsonBuild,
+  ymlBuild
 );
 
 /**
