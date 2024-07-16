@@ -30,6 +30,9 @@ function new$(options) {
   /* Initialize the HTTP server */
   root.use(require("./server"), core.server);
 
+  /* Initialize slack */
+  root.use(require("./slack"), core.slack);
+
   /* Attach database access module */
   root.use(require("./mongodb"), core.mongodb);
 
