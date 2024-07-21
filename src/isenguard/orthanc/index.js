@@ -27,6 +27,9 @@ function new$(options) {
   /* i18n util functions */
   root.decorate("i18n", require("./util/i18n"));
 
+  /* Attach error capture and reporting */
+  root.use(require("./sentry"), core.sentry);
+
   /* Initialize the HTTP server */
   root.use(require("./server"), core.server);
 
@@ -38,6 +41,9 @@ function new$(options) {
 
   /* Attach redis instance */
   root.use(require("./redis"), core.redis);
+
+  /* Attach scheduler */
+  /* root.use(require("./scheduler")); */
 
   /* Initialize crypto utilities */
   root.use(require("./crypto"), core.crypto);

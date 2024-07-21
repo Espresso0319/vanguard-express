@@ -9,6 +9,7 @@
     "flushall",
     "gulpfile",
     "isenguard",
+    "kwargs",
     "ncns",
     "Procfile",
     "unprefixed"
