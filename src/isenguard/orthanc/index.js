@@ -43,7 +43,7 @@ function new$(options) {
   root.use(require("./redis"), core.redis);
 
   /* Attach scheduler */
-  /* root.use(require("./scheduler")); */
+  root.use(require("./scheduler"));
 
   /* Initialize crypto utilities */
   root.use(require("./crypto"), core.crypto);
