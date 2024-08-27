@@ -1,11 +1,7 @@
 /**
  * insert.js
- *
- * @author  Denis Luchkin-Zhou <denis@ricepo.com>
- * @license MIT
  */
-const _            = require('lodash');
-
+const _ = require("lodash");
 
 /**
  * Inserts one document into the collection.
@@ -15,17 +11,16 @@ const _            = require('lodash');
  * @return    {Promise}      Resolves with inserted document if successful.
  */
 async function one(doc, options = null) {
-
   /* We don't support returnOriginal option here */
   if (options && options.returnOriginal) {
-    throw new Error('returnOriginal option is not supported.');
+    throw new Error("returnOriginal option is not supported.");
   }
 
   /* Merge with defaults */
-  const isFunc = (typeof this.defaults === 'function');
+  const isFunc = typeof this.defaults === "function";
 
   if (isFunc || !_.isEmpty(this.defaults)) {
-    doc = _.merge({ }, isFunc ? this.defaults(doc) : this.defaults, doc);
+    doc = _.merge({}, isFunc ? this.defaults(doc) : this.defaults, doc);
   }
 
   /* Insert the document, cache it, and return it */
@@ -41,7 +36,6 @@ async function one(doc, options = null) {
   return entry;
 }
 
-
 /**
  * Inserts one document into the collection.
  *
@@ -50,18 +44,19 @@ async function one(doc, options = null) {
  * @return    {Promise}      Resolves with inserted document if successful.
  */
 async function many(items, options = null) {
-
   /* Merge with defaults */
-  const isFunc = (typeof this.defaults === 'function');
+  const isFunc = typeof this.defaults === "function";
 
   if (isFunc || !_.isEmpty(this.defaults)) {
-    items = items.map(item =>
-      _.merge({ }, isFunc ? this.defaults(item) : this.defaults, item)
+    items = items.map((item) =>
+      _.merge({}, isFunc ? this.defaults(item) : this.defaults, item)
     );
   }
 
   /* If no items, skip */
-  if (items.length === 0) { return [ ]; }
+  if (items.length === 0) {
+    return [];
+  }
 
   /* Insert items, and return ids of them */
   const write = await this.collection.insertMany(items, options);
@@ -69,7 +64,6 @@ async function many(items, options = null) {
   const entries = write.insertedIds;
   return entries;
 }
-
 
 /**
  * Exports

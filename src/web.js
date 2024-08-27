@@ -13,6 +13,8 @@ Orthanc.ready(() => {
   /* Application level middleware */
   Orthanc.use("./middleware");
 
+  Orthanc.use("./isenguard/ig-auth", Hafiz("auth"));
+
   /* Listen to designated port */
   Orthanc.ready(() => {
     const server = Orthanc.app.listen(port, () => {

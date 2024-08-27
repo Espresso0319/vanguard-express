@@ -2,7 +2,7 @@
  * api/auth/index.js
  */
 
-require("schematik").use(require("@riceeu/schema"));
+require("schematik").use(require("../..//schema"));
 
 /**
  * Auth package
@@ -17,4 +17,3 @@ function auth(options) {
 
 module.exports = auth;
 module.exports.web = require("./web");
-module.exports.VERSION = require("../package.json").version;

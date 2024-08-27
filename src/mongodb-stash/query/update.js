@@ -1,19 +1,14 @@
 /**
  * update.js
- *
- * @author  Denis Luchkin-Zhou <denis@ricepo.com>
- * @license MIT
  */
-const _            = require('lodash');
-const Debug        = require('debug')('mongostash:update');
-const ObjectID     = require('../objectid');
-
+const _ = require("lodash");
+const Debug = require("debug")("mongostash:update");
+const ObjectID = require("../objectid");
 
 /*!
  * Default update options.
  */
-const defaults = { returnDocument: 'after' };
-
+const defaults = { returnDocument: "after" };
 
 /**
  * Updates one record by ID and modifies the cache.
@@ -23,9 +18,8 @@ const defaults = { returnDocument: 'after' };
  * @return    {object}       The updated document.
  */
 async function one(id, changes, options) {
-
   /* Cache only option that will only update cache instead of mongodb */
-  if (_.get(options, 'cacheOnly')) {
+  if (_.get(options, "cacheOnly")) {
     let data = await this.cache.get(id);
 
     /* get mongo data as backup */
@@ -36,26 +30,26 @@ async function one(id, changes, options) {
 
     /* If both has no data record, do nothing */
     if (data) {
-
       /* overwrite directly */
-      this.cache.set(_.assign(data, _.get(changes, '$set')));
+      this.cache.set(_.assign(data, _.get(changes, "$set")));
     }
     return null;
   }
 
   const query = { _id: ObjectID(id) };
   this.cache.del(id);
-  options = _.assign({ }, options, defaults);
+  options = _.assign({}, options, defaults);
 
   const write = await this.collection.findOneAndUpdate(query, changes, options);
   /**
    * Use double delete + cache aside caching strategy to maintain eventual consistency
    */
-  setTimeout(() => {this.cache.del(id);}, 1000);
+  setTimeout(() => {
+    this.cache.del(id);
+  }, 1000);
 
   return write.value;
 }
-
 
 /**
  * Updates multiple records and removes them from cache.
@@ -67,22 +61,25 @@ async function one(id, changes, options) {
  * @return    {number}       Number of updated documents.
  */
 async function many(query, changes, options) {
-
   /* Use the safe version if safeMode is on */
   if (this.safeMode) {
     return this.updateSafe(query, changes, options);
   }
 
   /* Set default options, fail on attempted upsert */
-  options = _.assign({ }, options, defaults);
+  options = _.assign({}, options, defaults);
   if (options.upsert) {
-    throw new Error('Upsert is only available with safe mode.');
+    throw new Error("Upsert is only available with safe mode.");
   }
 
   /* Find all maching documents and record their IDs */
-  let matches = await this.collection.find(query, { projection: { _id: true } }).toArray();
-  matches = _.map(matches, '_id');
-  if (matches.length === 0) { return 0; }
+  let matches = await this.collection
+    .find(query, { projection: { _id: true } })
+    .toArray();
+  matches = _.map(matches, "_id");
+  if (matches.length === 0) {
+    return 0;
+  }
 
   /* Drop all of them from cache */
   this.cache.del(matches);
@@ -94,19 +91,20 @@ async function many(query, changes, options) {
   /**
    * Use double delete + cache aside caching strategy to maintain eventual consistency
    */
-  setTimeout(() => {this.cache.del(matches);}, 1000);
+  setTimeout(() => {
+    this.cache.del(matches);
+  }, 1000);
 
   /* If updated document count does not match the number of IDs, data must
    * have been modified; drop entire cache just to be safe. */
   /* istanbul ignore if */
   if (write.modifiedCount !== matches.length) {
-    Debug('ModifiedCount mismatch, dropping all cache just to be safe.');
+    Debug("ModifiedCount mismatch, dropping all cache just to be safe.");
     this.cache.reset();
   }
 
   return write.modifiedCount;
 }
-
 
 /**
  * Updates multiple records and drops entire cache.
@@ -117,13 +115,12 @@ async function many(query, changes, options) {
  * @return    {number}       Number of updated documents.
  */
 async function safe(query, changes, options) {
-  options = _.assign({ }, options, defaults);
+  options = _.assign({}, options, defaults);
 
   const write = await this.collection.updateMany(query, changes, options);
   this.cache.reset();
   return write.modifiedCount;
 }
-
 
 /**
  * Exports

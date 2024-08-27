@@ -73,6 +73,7 @@
     "redis": "2.8.0",
     "redlock": "3.1.2",
     "rolling-stats": "^0.1.1",
+    "schematik": "2.2.0",
     "semver": "^7.6.2",
     "seneca": "2.1.0",
     "seneca-as-promised": "^2.0.0",
