@@ -13,6 +13,18 @@ function auth(options) {
 
   /* Initialize package */
   this.addAsync("init:auth", require("./init")(options));
+
+  /**
+   * Database access of account
+   */
+  this.addAsync(
+    "ns:account,role:data,cmd:find",
+    require("./data/account/find")
+  );
+  this.addAsync(
+    "ns:account,role:data,cmd:update",
+    require("./data/account/update")
+  );
 }
 
 module.exports = auth;

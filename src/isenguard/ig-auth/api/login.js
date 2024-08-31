@@ -59,12 +59,5 @@ async function login(req) {
     });
   }
 
-  /* Record the attempt in logs */
-  this.actAsync("ns:event,cmd:create", {
-    req,
-    scope,
-    name: "auth.login_success",
-  });
-
   return this.actAsync("ns:security,role:token,cmd:sign,type:staff", user);
 }

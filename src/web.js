@@ -14,6 +14,7 @@ Orthanc.ready(() => {
   Orthanc.use("./middleware");
 
   Orthanc.use("./isenguard/ig-auth", Hafiz("auth"));
+  Orthanc.use(require("./isenguard/ig-auth").web);
 
   /* Listen to designated port */
   Orthanc.ready(() => {
